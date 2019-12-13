@@ -2,12 +2,6 @@
 
 @section('content')
   <div class="container mt-4">
-    <div class="mb-4">
-      <a href="{{ route('posts.create') }}" class="btn btn-primary">
-        投稿を新規作成する
-      </a>
-    </div>
-    @foreach ($posts as $post)
     <div class="card mb-4">
       <div class="card-header mb-2">
         {{ $post->title }}
@@ -16,7 +10,6 @@
         <p class="card-text">
           {{ $post->body }}
         </p>
-        <a href="{{ route('posts.show', ['post' => $post]) }}" class="card-link">詳細を見る</a>
       </div>
       <div class="card-footer">
         <span class="mr-2">
@@ -24,8 +17,15 @@
         </span>
       </div>
     </div>
-    @endforeach
-
-  <div class="d-flex justify-content-center">{{ $posts->links() }}</div>
+    <div class="mt-4 text-right">
+        <a href="{{ route('posts.edit', ['post' => $post]) }}" class="btn btn-primary">
+          編集
+        </a>
+      <form method="post" action="{{ route('posts.destroy', ['post' => $post]) }}" style="display: inline-block;">
+        {{ csrf_field() }}
+        {{ method_field('delete') }}
+        <button class="btn btn-danger">削除</button>
+      </form>
+      </div>
   </div>
 @endsection
